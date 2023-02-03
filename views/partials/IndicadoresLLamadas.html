@@ -1,0 +1,341 @@
+<% function secondsToString(seconds) { var hour=Math.floor(seconds / 3600); hour=(hour < 10)? '0' + hour : hour; var
+	minute=Math.floor((seconds / 60) % 60); minute=(minute < 10)? '0' + minute : minute; var second=seconds % 60;
+	second=(second < 10)? '0' + second : second; return hour + ':' + minute + ':' + second; } %>
+<%- include('./head.html') -%>
+	<div class="container-fluid py-4">
+		<div class="row">
+			<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+				<div class="card">
+					<div class="card-header p-3 pt-2">
+						<div
+							class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+							<i class="material-icons opacity-10">person</i>
+						</div>
+						<div class="text-end pt-1">
+							<p class="text-sm mb-0 text-capitalize">Entrantes</p>
+							<h4 class="mb-0">
+								<%= entrantes[0].Aggregate_1 %>
+							</h4>
+						</div>
+					</div>
+					<hr class="dark horizontal my-0">
+				</div>
+			</div>
+			<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+				<div class="card">
+					<div class="card-header p-3 pt-2">
+						<div
+							class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+							<i class="material-icons opacity-10">weekend</i>
+						</div>
+						<div class="text-end pt-1">
+							<p class="text-sm mb-0 text-capitalize">Tiempo</p>
+							<h4 class="mb-0">
+								<%=  secondsToString(entrantes[0].Aggregate_2) %>
+							</h4>
+						</div>
+					</div>
+					<hr class="dark horizontal my-0">
+				</div>
+			</div>
+			<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+				<div class="card">
+					<div class="card-header p-3 pt-2">
+						<div
+							class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+							<i class="material-icons opacity-10">person</i>
+						</div>
+						<div class="text-end pt-1">
+							<p class="text-sm mb-0 text-capitalize">Salientes</p>
+							<h4 class="mb-0">
+								<%= salientes[0].Aggregate_1 %>
+							</h4>
+						</div>
+					</div>
+					<hr class="dark horizontal my-0">
+				</div>
+			</div>
+			<div class="col-xl-3 col-sm-6">
+				<div class="card">
+					<div class="card-header p-3 pt-2">
+						<div
+							class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
+							<i class="material-icons opacity-10">weekend</i>
+						</div>
+						<div class="text-end pt-1">
+							<p class="text-sm mb-0 text-capitalize">Tiempo</p>
+							<h4 class="mb-0">
+								<%= secondsToString(salientes[0].Aggregate_2) %>
+							</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="mt-4 mb-4">
+				<div class="card z-index-2  ">
+					<div
+						class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+						<div
+							class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
+							<div class="chart">
+								<canvas id="chart-line" class="chart-canvas"
+									height="170"></canvas>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<h6 class="mb-0 "> Cantidad De LLamadas Mensuales </h6>
+						<p class="text-sm "> Esta grafica mostrara el tiempo de 11 meses hacia atras</p>
+						<hr class="dark horizontal">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-4">
+			<div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+				<div class="card">
+					<div class="card-header pb-0">
+						<div class="row">
+							<div class="col-lg-6 col-7">
+								<h6>Agentes</h6>
+								<p class="text-sm mb-0">
+									<i class="fa fa-check text-info"
+										aria-hidden="true"></i>
+									Cantidad de llamadas
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="card-body px-0 pb-2">
+						<div class="table-responsive">
+							<table class="table align-items-center mb-0">
+								<thead>
+									<tr>
+										<th
+											class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+											Agentes</th>
+										<th
+											class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+											nombre</th>
+										<th
+											class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+											Competitividad</th>
+									</tr>
+								</thead>
+								<tbody>
+									<% for( let index=0; index <  users.length ; index++ ) { %>
+										<tr>
+											<td>
+												<div
+													class="avatar-group mt-2">
+													<a href="javascript:;"
+														class="avatar avatar-xs rounded-circle"
+														data-bs-toggle="tooltip"
+														data-bs-placement="bottom"
+														title="Ryan Tompson">
+														<img src="../assets/img/team-1.jpg"
+															alt="team1">
+													</a>
+													<a href="javascript:;"
+														class="avatar avatar-xs rounded-circle"
+														data-bs-toggle="tooltip"
+														data-bs-placement="bottom"
+														title="Romina Hadid">
+														<img src="../assets/img/team-2.jpg"
+															alt="team2">
+													</a>
+													<a href="javascript:;"
+														class="avatar avatar-xs rounded-circle"
+														data-bs-toggle="tooltip"
+														data-bs-placement="bottom"
+														title="Alexander Smith">
+														<img src="../assets/img/team-3.jpg"
+															alt="team3">
+													</a>
+													<a href="javascript:;"
+														class="avatar avatar-xs rounded-circle"
+														data-bs-toggle="tooltip"
+														data-bs-placement="bottom"
+														title="Jessica Doe">
+														<img src="../assets/img/team-4.jpg"
+															alt="team4">
+													</a>
+												</div>
+											</td>
+											<td
+												class="align-middle text-center text-sm">
+												<span
+													class="text-xs font-weight-bold">
+													<%= users[index].nombre %> </span>
+											</td>
+											<td class="align-middle">
+												<div
+													class="progress-wrapper w-75 mx-auto">
+													<div
+														class="progress-info">
+														<div
+															class="progress-percentage">
+															<span
+																class="text-xs font-weight-bold"><%= users[index].cantidad[0].Aggregate_1 %></span>
+														</div>
+													</div>
+													<div
+														class="progress">
+														<div class="progress-bar bg-gradient-info w-60"
+															role="progressbar"
+															aria-valuenow="<%= users[index].cantidad[0].Aggregate_1 %>"
+															aria-valuemin="0"
+															aria-valuemax="100">
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<% } %>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6">
+				<div class="card h-100">
+					<div class="card-header pb-0">
+						<h6>llamadas Agentes comparativa Mes Acutal</h6>
+					</div>
+					<div class="card-body p-3">
+						<canvas id="chatwithCHATgpt"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+
+		var ctx = document.getElementById('chatwithCHATgpt').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['<%= users[0].nombre %>', '<%= users[1].nombre %>', '<%= users[2].nombre %>', '<%= users[3].nombre %>', '<%= users[4].nombre %>'],
+        datasets: [{
+            label: '# de Llamdas',
+            data: [Number("<%= users[0].cantidad[0].Aggregate_1 %>"), Number("<%= users[1].cantidad[0].Aggregate_1 %>"), Number("<%= users[2].cantidad[0].Aggregate_1 %>"), Number("<%= users[3].cantidad[0].Aggregate_1 %>"), Number("<%= users[4].cantidad[0].Aggregate_1 %>")],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        animation: {
+            duration: 2000,
+            easing: 'easeOutBounce'
+        }
+    }
+});
+
+			var ctx2 = document.getElementById("chart-line").getContext("2d");
+
+			new Chart(ctx2, {
+				type: "bar",
+				data: {
+					labels: ["<%= meses[0].fecha %>", "<%= meses[1].fecha %>", "<%= meses[2].fecha %>", "<%= meses[3].fecha %>", "<%= meses[4].fecha %>", "<%= meses[5].fecha %>", "<%= meses[6].fecha %>", "<%= meses[7].fecha %>", "<%= meses[8].fecha %>", "<%= meses[9].fecha %>", "<%= meses[10].fecha %>"],
+					datasets: [{
+						label: "Mobile apps",
+						tension: 0,
+						borderWidth: 0,
+						pointRadius: 5,
+						pointBackgroundColor: "rgba(255, 255, 255, .8)",
+						pointBorderColor: "transparent",
+						borderColor: "rgba(255, 255, 255, .8)",
+						borderColor: "rgba(255, 255, 255, .8)",
+						borderWidth: 4,
+						backgroundColor: "transparent",
+						fill: true,
+						data: [Number("<%= meses[0].cantidad[0].Aggregate_1 %>"), Number("<%= meses[1].cantidad[0].Aggregate_1 %>"), Number("<%= meses[2].cantidad[0].Aggregate_1 %>"), Number("<%= meses[3].cantidad[0].Aggregate_1 %>"), Number("<%= meses[4].cantidad[0].Aggregate_1 %>"), Number("<%= meses[5].cantidad[0].Aggregate_1 %>"), Number("<%= meses[6].cantidad[0].Aggregate_1 %>"), Number("<%= meses[7].cantidad[0].Aggregate_1 %>"), Number("<%= meses[8].cantidad[0].Aggregate_1 %>"), Number("<%= meses[9].cantidad[0].Aggregate_1 %>"), Number("<%= meses[10].cantidad[0].Aggregate_1 %>")],
+						maxBarThickness: 6
+
+					}],
+				},
+				options: {
+					responsive: true,
+					maintainAspectRatio: false,
+					plugins: {
+						legend: {
+							display: false,
+						}
+					},
+					interaction: {
+						intersect: false,
+						mode: 'index',
+					},
+					scales: {
+						y: {
+							grid: {
+								drawBorder: false,
+								display: true,
+								drawOnChartArea: true,
+								drawTicks: false,
+								borderDash: [5, 5],
+								color: 'rgba(255, 255, 255, .2)'
+							},
+							ticks: {
+								display: true,
+								color: '#f8f9fa',
+								padding: 10,
+								font: {
+									size: 14,
+									weight: 300,
+									family: "Roboto",
+									style: 'normal',
+									lineHeight: 2
+								},
+							}
+						},
+						x: {
+							grid: {
+								drawBorder: false,
+								display: false,
+								drawOnChartArea: false,
+								drawTicks: false,
+								borderDash: [5, 5]
+							},
+							ticks: {
+								display: true,
+								color: '#f8f9fa',
+								padding: 10,
+								font: {
+									size: 14,
+									weight: 300,
+									family: "Roboto",
+									style: 'normal',
+									lineHeight: 2
+								},
+							}
+						},
+					},
+				},
+			});
+
+		</script>
+		<%- include('./scripts.html') -%>
+	</div>

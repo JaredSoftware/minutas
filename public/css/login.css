@@ -1,0 +1,17 @@
+.container{
+	display: flex;
+	/*display: flex; el cual vuelve al contenedor un elemento flex*/
+
+	align-items: center;
+	/*justify-content: center; le decimos a los elementos del contenedor flex que se ubiquen al centro del eje principal eje horizontal*/
+
+	justify-content: center;
+	/*align-items: center; estamos diciendo que queremos que los elementos dentro del contenedor flex se ubiquen en el centro del eje secundario eje vertical*/
+
+	min-height: 100vh;
+	/*min-height: 100vh; que significa tome como altura mínima del contenedor el total del alto de la ventana del navegador web utilizado.*/
+}
+
+.form {
+	width: 450px;
+}

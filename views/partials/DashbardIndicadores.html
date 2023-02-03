@@ -1,0 +1,262 @@
+<% let cantidad_llamadas = 0;
+let cantidad_llamadas_respondidas = 0;
+let cantidad_llamadas_tono =0; 
+let cantidad_llamadas_abandonadas =0; 
+for (let index = 0; index < indicadores.length; index++) {
+	cantidad_llamadas += indicadores[index].CallsOffered
+	cantidad_llamadas_respondidas += indicadores[index].CallsAnswered
+	cantidad_llamadas_tono += indicadores[index].CallsAnsweredAfterThreshold
+	cantidad_llamadas_abandonadas += indicadores[index].SkillsetAbandoned
+}
+%>
+<%- include('./head.html') -%>
+	<div class="container-fluid py-4">
+		<div class="row">
+			<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+				<div class="card">
+					<div class="card-header p-3 pt-2">
+						<div
+							class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+							<i class="material-icons opacity-10">weekend</i>
+						</div>
+						<div class="text-end pt-1">
+							<p class="text-sm mb-0 text-capitalize">Recibidas</p>
+							<h4 class="mb-0">
+								<%= cantidad_llamadas %>
+							</h4>
+						</div>
+					</div>
+					<hr class="dark horizontal my-0">
+					<div class="card-footer p-3">
+						<p class="mb-0">
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+				<div class="card">
+					<div class="card-header p-3 pt-2">
+						<div
+							class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+							<i class="material-icons opacity-10">person</i>
+						</div>
+						<div class="text-end pt-1">
+							<p class="text-sm mb-0 text-capitalize">Contestadas</p>
+							<h4 class="mb-0">
+								<%= cantidad_llamadas_respondidas %>
+							</h4>
+						</div>
+					</div>
+					<hr class="dark horizontal my-0">
+					<div class="card-footer p-3">
+						<p class="mb-0">
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+				<div class="card">
+					<div class="card-header p-3 pt-2">
+						<div
+							class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+							<i class="material-icons opacity-10">person</i>
+						</div>
+						<div class="text-end pt-1">
+							<p class="text-sm mb-0 text-capitalize">20 Segundos</p>
+							<h4 class="mb-0">
+								<%= cantidad_llamadas_tono %>
+							</h4>
+						</div>
+					</div>
+					<hr class="dark horizontal my-0">
+					<div class="card-footer p-3">
+						<p class="mb-0">
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-sm-6">
+				<div class="card">
+					<div class="card-header p-3 pt-2">
+						<div
+							class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
+							<i class="material-icons opacity-10">weekend</i>
+						</div>
+						<div class="text-end pt-1">
+							<p class="text-sm mb-0 text-capitalize">Rechazadas</p>
+							<h4 class="mb-0">
+								<%= cantidad_llamadas_abandonadas %>
+							</h4>
+						</div>
+					</div>
+					<hr class="dark horizontal my-0">
+					<div class="card-footer p-3">
+						<p class="mb-0">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="mt-4 mb-4">
+				<div class="card z-index-2 ">
+					<div
+						class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+						<div
+							class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+							<div class="chart">
+								<canvas id="chart-bars" class="chart-canvas"
+									height="170"></canvas>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<h6 class="mb-0 ">Cantidad de llamadas por días</h6>
+						<p class="text-sm ">Esta información se actualzia de dos formas manual y automaticá</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-4">
+			<div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+				<div class="card">
+					<div class="card-header">
+						<h6 class="mb-0 ">Nivel de Servicio</h6>
+					</div>
+					<div class="chart">
+						<canvas id="line-chart" width="800" height="450"></canvas>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6">
+				<div class="card h-100">
+					<div class="card-header">
+						<h6 class="mb-0 ">Skill set Abndoned</h6>
+					</div>
+					<canvas id="pie-chart" width="800" height="450"></canvas>
+				</div>
+			</div>
+		</div>
+		<%- include('./scripts.html') -%>
+	</div>
+	<script>
+		var ctx = document.getElementById("chart-bars").getContext("2d");
+
+		new Chart(ctx, {
+			type: "bar",
+			data: {
+				labels: ["<%= dias[0].dia %>", "<%= dias[1].dia %>", "<%= dias[2].dia %>", "<%= dias[3].dia %>", "<%= dias[4].dia %>", "<%= dias[5].dia %>", "<%= dias[6].dia %>"],
+				datasets: [{
+					label: "Contestadas",
+					tension: 0.4,
+					borderWidth: 0,
+					borderRadius: 4,
+					borderSkipped: false,
+					backgroundColor: "rgba(255, 255, 255, .8)",
+					data: [Number("<%= dias[0].cantidad %>"), Number("<%= dias[1].cantidad%>"), Number("<%= dias[2].cantidad%>"), Number("<%= dias[3].cantidad%>"), Number("<%= dias[4].cantidad%>"), Number("<%= dias[5].cantidad%>"), Number("<%= dias[6].cantidad%>")],
+					maxBarThickness: 6
+				},],
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				plugins: {
+					legend: {
+						display: false,
+					}
+				},
+				interaction: {
+					intersect: false,
+					mode: 'index',
+				},
+				scales: {
+					y: {
+						grid: {
+							drawBorder: false,
+							display: true,
+							drawOnChartArea: true,
+							drawTicks: false,
+							borderDash: [5, 5],
+							color: 'rgba(255, 255, 255, .2)'
+						},
+						ticks: {
+							suggestedMin: 0,
+							suggestedMax: 500,
+							beginAtZero: true,
+							padding: 10,
+							font: {
+								size: 14,
+								weight: 300,
+								family: "Roboto",
+								style: 'normal',
+								lineHeight: 2
+							},
+							color: "#fff"
+						},
+					},
+					x: {
+						grid: {
+							drawBorder: false,
+							display: true,
+							drawOnChartArea: true,
+							drawTicks: false,
+							borderDash: [5, 5],
+							color: 'rgba(255, 255, 255, .2)'
+						},
+						ticks: {
+							display: true,
+							color: '#f8f9fa',
+							padding: 10,
+							font: {
+								size: 14,
+								weight: 300,
+								family: "Roboto",
+								style: 'normal',
+								lineHeight: 2
+							},
+						}
+					},
+				},
+			},
+		});
+
+		const DATA_COUNT = 5;
+		const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };
+
+
+		new Chart(document.getElementById("line-chart"), {
+			type: 'line',
+			data: {
+				labels: ["<%= dias[0].dia %>", "<%= dias[1].dia %>", "<%= dias[2].dia %>", "<%= dias[3].dia %>", "<%= dias[4].dia %>", "<%= dias[5].dia %>", "<%= dias[6].dia %>"],
+				datasets: [{
+					data: [Number("<%= dias[0].servicio %>"),Number("<%= dias[1].servicio %>"),Number("<%= dias[2].servicio %>"),Number("<%= dias[3].servicio %>"),Number("<%= dias[4].servicio %>"),Number("<%= dias[5].servicio %>"),Number("<%= dias[6].servicio %>")],
+					label: "Servicio",
+					borderColor: "#3e95cd",
+					fill: false
+				}
+				]
+			},
+			options: {
+				title: {
+					display: true,
+					text: 'World population per region (in millions)'
+				}
+			}
+		});
+
+		new Chart(document.getElementById("pie-chart"), {
+			type: 'pie',
+			data: {
+				labels: ["<%= dias[0].dia %>", "<%= dias[1].dia %>", "<%= dias[2].dia %>", "<%= dias[3].dia %>", "<%= dias[4].dia %>", "<%= dias[5].dia %>", "<%= dias[6].dia %>"],
+				datasets: [{
+					label: "Population (millions)",
+					backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+					data: [Number("<%= dias[0].abandoned %>"), Number("<%= dias[1].abandoned%>"), Number("<%= dias[2].abandoned%>"), Number("<%= dias[3].abandoned%>"), Number("<%= dias[4].abandoned%>"), Number("<%= dias[5].abandoned%>"), Number("<%= dias[6].abandoned%>")]
+				}]
+			},
+			options: {
+				title: {
+					display: true,
+					text: 'Predicted world population (millions) in 2050'
+				}
+			}
+		});
+
+	</script>
+	<script src="/js/bar.js"></script>
